@@ -1,0 +1,21 @@
+name: NEMO Lab Reusable Workflow
+
+on:
+  workflow_call:
+    inputs:
+      message:
+        description: Deterministic text copied to the job summary
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  reusable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record reusable-workflow context
+        run: |
+          echo "message=${{ inputs.message }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "caller=${{ github.workflow }}" >> "$GITHUB_STEP_SUMMARY"

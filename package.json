@@ -1,0 +1,13 @@
+{
+  "name": "nemo-github-measurement-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic dependency and Actions fixture for GitHub SaaS measurements",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
