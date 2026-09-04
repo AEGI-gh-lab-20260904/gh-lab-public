@@ -1,0 +1,23 @@
+name: NEMO Lab Controlled Failure
+
+on:
+  workflow_dispatch:
+    inputs:
+      should_fail:
+        description: Generate a failed job for rerun and log tests
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  controlled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record input
+        run: echo "should_fail=${{ inputs.should_fail }}"
+      - name: Optional failure
+        if: inputs.should_fail
+        run: exit 42

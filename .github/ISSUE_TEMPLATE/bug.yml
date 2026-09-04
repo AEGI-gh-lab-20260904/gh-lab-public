@@ -1,0 +1,24 @@
+name: NEMO Lab observation
+description: Create a structured issue event for the measurement lab
+title: "[NEMO-LAB] "
+labels: ["nemo-lab"]
+body:
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - REST
+        - GraphQL
+        - Audit Log
+        - Webhook
+        - Actions
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: Observation
+      description: Do not include credentials or production data.
+    validations:
+      required: true

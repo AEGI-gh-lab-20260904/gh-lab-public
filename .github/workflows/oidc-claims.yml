@@ -1,0 +1,23 @@
+name: NEMO Lab OIDC Claims
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  claims:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Request OIDC token and record non-secret claims
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const token = await core.getIDToken('aegi-nemo-lab');
+            const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString('utf8'));
+            const allowed = ['iss', 'sub', 'aud', 'repository', 'repository_id', 'repository_owner', 'actor', 'actor_id', 'workflow', 'job_workflow_ref', 'ref', 'sha', 'run_id', 'run_number', 'run_attempt', 'environment'];
+            const observed = Object.fromEntries(allowed.filter((key) => key in payload).map((key) => [key, payload[key]]));
+            await core.summary.addHeading('OIDC claims').addCodeBlock(JSON.stringify(observed, null, 2), 'json').write();
