@@ -1,0 +1,26 @@
+name: NEMO Lab Cancellable Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      marker:
+        description: Correlation marker for cancellation tests
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  wait-for-cancellation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Record correlation marker
+        run: echo "marker=${{ inputs.marker }}" >> "$GITHUB_STEP_SUMMARY"
+      - name: Wait for cancellation API
+        run: |
+          for iteration in $(seq 1 120); do
+            echo "waiting iteration=$iteration"
+            sleep 5
+          done
