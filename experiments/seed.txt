@@ -1,0 +1,2 @@
+repository=gh-lab-public
+visibility=public
